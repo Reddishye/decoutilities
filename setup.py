@@ -6,11 +6,11 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
 name='decoutilities',
-version='0.1.0',
+version='0.1.7',
 author='Hugo Torres',
 author_email='contact@redactado.es',
-description='Enhance the readability of your code with decorators.',
-packages=find_packages(),
+description='Enhance the readability of your code with decorators and simplify the creation of configuration files.',
+packages=find_packages(include=['decoutilities', 'decoutilities.*']),
 classifiers=[
 'Programming Language :: Python :: 3',
 'License :: OSI Approved :: MIT License',

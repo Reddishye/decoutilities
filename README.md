@@ -43,6 +43,45 @@ class MyPrivateClass:
 # Trying to access MyPrivateClass from outside the module will raise an error
 ```
 
+### @static
+
+The `@static` decorator transforms any class into a static class, raising an exception if an attempt is made to instantiate it. This feature is experimental and might fail, please report any errors.
+
+```python
+from decoutilities import static
+
+@static
+class MyStaticClass:
+    pass
+
+# Trying to instantiate MyStaticClass will raise an exception
+instance = MyStaticClass()  # Raises: Exception: This class is static and cannot be instantiated!
+```
+
+### @threaded
+
+The `@threaded` decorator transforms any class into a threaded class, returning a thread object when the class is instantiated. This feature is experimental and might fail, please report any errors.
+
+```python
+from decoutilities import threaded
+
+@threaded
+class MyThreadedClass:
+    def __init__(self, value):
+        self.value = value
+
+    def run(self):
+        print(f"Running with value {self.value}")
+
+# Instantiate MyThreadedClass, which returns a thread object
+thread = MyThreadedClass(5)
+
+# Start the thread
+thread.start()
+
+# Outputs: Running with value 5
+```
+
 ### Config System
 
 `decoutilities` provides a complex config system that allows you to easily manage configuration settings using decorators.
@@ -52,7 +91,7 @@ class MyPrivateClass:
 The `configContainer` class is responsible for loading and saving configuration data from/to JSON or YAML files.
 
 ```python
-from decoutilities import configContainer
+from decoutilities.config import configContainer
 
 # Create a configContainer instance
 config_container = configContainer(path="config", filename="settings", type="json")
@@ -75,7 +114,7 @@ config_container.setValue("timeout", 10)
 The `config` class works in conjunction with `configContainer` to provide a decorator-based approach for registering settings.
 
 ```python
-from decoutilities import config, configContainer
+from decoutilities.config import config, configContainer
 
 # Create a configContainer instance
 config_container = configContainer(path="config", filename="settings", type="json")
@@ -90,6 +129,28 @@ def api_key():
 
 # Access the registered setting
 api_key = config_container.getValue("api_key")
+```
+
+### Inject System
+
+`decoutilities` comes with an easy to use injector class (EXPERIMENTAL) that allows to easily share information.
+
+```python
+from decoutilities.inject import injector
+
+# Create an instance of the injector
+injector_instance = injector()
+
+# Register a function with the injector
+@injector_instance.register('greet')
+def greet(name):
+    return f"Hello, {name}!"
+
+# Use the injector to get the function
+greet_func = injector_instance.inject('greet')
+
+# Call the function
+print(greet_func('World'))  # Outputs: Hello, World!
 ```
 
 ## License
