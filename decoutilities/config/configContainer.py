@@ -83,3 +83,4 @@ class configContainer:
 
     def reload(self):
         self.load()
+        return self.data

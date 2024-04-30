@@ -47,3 +47,13 @@ def trycatch(func):
         except Exception as e:
             print(f"An error occurred: {e}")
     return wrapper
+
+# @loop(condition)
+# Make a function loop until a condition is met. (EXPERIMENTAL)
+def loop(condition_func):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            while condition_func():
+                func(*args, **kwargs)
+        return wrapper
+    return decorator

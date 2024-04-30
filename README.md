@@ -97,6 +97,24 @@ def risky_function():
 risky_function()  # Prints: An error occurred: division by zero
 ```
 
+### @loop(condition_func)
+
+The `@loop` decorator is an experimental feature that allows a function to loop until a certain condition is met. The condition is a function that returns a boolean value.
+
+```python
+from decoutilities import loop
+
+var1 = 0
+
+@loop(lambda: var1 > 10)
+def increment_var1():
+    global var1
+    var1 += 1
+    print(var1)
+
+increment_var1()  # This will keep running until 'var1' is greater than 10
+```
+
 ### Config System
 
 `decoutilities` provides a complex config system that allows you to easily manage configuration settings using decorators.
