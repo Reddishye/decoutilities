@@ -115,6 +115,109 @@ def increment_var1():
 increment_var1()  # This will keep running until 'var1' is greater than 10
 ```
 
+### @deprecated
+
+The `@deprecated` decorator marks a function as deprecated and prints a log when it's used for the first time. It also raises a `DeprecationWarning`.
+
+```python
+from decoutilities import deprecated
+
+@deprecated
+def old_function():
+    print("This function is old.")
+
+old_function()  # Prints a warning and "This function is old."
+```
+
+### @experimental
+
+The `@experimental` decorator marks a function as experimental and prints a log when it's used for the first time. It also raises a `UserWarning`.
+
+```python
+from decoutilities import experimental
+
+@experimental
+def new_function():
+    print("This function is new and experimental.")
+
+new_function()  # Prints a warning and "This function is new and experimental."
+```
+
+### @notnull
+
+The `@notnull` decorator ensures that a function does not return `None`.
+
+```python
+from decoutilities import notnull
+
+@notnull
+def function_that_should_not_return_none():
+    return None  # Raises an exception
+
+function_that_should_not_return_none()  # Raises an exception
+```
+
+### @delay(seconds)
+
+The `@delay` decorator delays the execution of a function by a number of seconds.
+
+```python
+from decoutilities import delay
+
+@delay(5)
+def delayed_function():
+    print("This function was delayed.")
+
+delayed_function()  # Waits 5 seconds, then prints "This function was delayed."
+```
+
+### @timeout(seconds)
+
+The `@timeout` decorator causes a function to time out after a number of seconds.
+
+```python
+from decoutilities import timeout
+
+@timeout(5)
+def long_running_function():
+    while True:
+        pass  # Raises an exception after 5 seconds
+
+long_running_function()  # Raises an exception after 5 seconds
+```
+
+### @retry(attempts, delay)
+
+The `@retry` decorator retries a function a number of times with a delay between each attempt.
+
+```python
+from decoutilities import retry
+
+@retry(3, 1)
+def unreliable_function():
+    import random
+    if random.random() < 0.5:
+        raise Exception("The function failed.")
+    else:
+        print("The function succeeded.")
+
+unreliable_function()  # Tries to run the function up to 3 times, with a 1 second delay between attempts
+```
+
+### @log
+
+The `@log` decorator logs a function's arguments and return value.
+
+```python
+from decoutilities import log
+
+@log
+def function_to_log(a, b):
+    return a + b
+
+function_to_log(1, 2)  # Prints "Function function_to_log called with args: (1, 2) and kwargs: {}, returned: 3"
+```
+
 ### Config System
 
 `decoutilities` provides a complex config system that allows you to easily manage configuration settings using decorators.
