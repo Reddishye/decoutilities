@@ -82,6 +82,21 @@ thread.start()
 # Outputs: Running with value 5
 ```
 
+### @trycatch
+
+The `@trycatch` decorator wraps a function in a try-catch block, allowing it to handle exceptions without needing to write explicit try-catch blocks in your code.
+
+```python
+from decoutilities import trycatch
+
+@trycatch
+def risky_function():
+    # Some risky operation that might raise an exception
+    return 1 / 0
+
+risky_function()  # Prints: An error occurred: division by zero
+```
+
 ### Config System
 
 `decoutilities` provides a complex config system that allows you to easily manage configuration settings using decorators.

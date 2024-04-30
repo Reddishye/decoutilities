@@ -37,3 +37,13 @@ def threaded(cls):
     def wrapper(*args, **kwargs):
         return threading.Thread(target=cls, args=args, kwargs=kwargs)
     return wrapper
+
+# @trycatch
+# Make a piece of code try-catchable without using try-catch blocks.
+def trycatch(func):
+    def wrapper(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except Exception as e:
+            print(f"An error occurred: {e}")
+    return wrapper
