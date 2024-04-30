@@ -153,6 +153,16 @@ greet_func = injector_instance.inject('greet')
 print(greet_func('World'))  # Outputs: Hello, World!
 ```
 
+## Experimental Features
+
+All features marked as in `BETA` or being `EXPERIMENTAL` are untested, what means they were only tested below specific condititons and not with all case of uses.
+
+Please report any issues or contribute by making a PR (look for [CONTRIBUTING](CONTRIBUTING) section for details).
+
+### REMEMBER:
+
+This whole project is still in beta, and versions below `0.1.5` might not work. Also syntax changes could be made in a future, so consider creating a `requeriments.txt`file for your project specifying the version you wonder to use.
+
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
@@ -160,6 +170,14 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## Contributing
 
 Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request on the [GitHub repository](https://github.com/Reddishye/decoutilities).
+
+### Pull Requests
+
+In case you wonder to make a pull request, please include in the title any of these:
+- FEATURE: For new features, include a explanation mentioning why it should be inside `decoutilities`.
+- BUGFIX: For general bugfixes.
+- SECURITY: For fixes related with security issues.
+- QoL: For QoL improvements
 
 ## Author
 
