@@ -104,19 +104,27 @@ def delay(seconds):
 
 # @timeout(seconds)
 # Timeout a function after a number of seconds.
-def timeout(seconds):
-    import signal
+from threading import Thread
+import time
 
+class TimeoutException(Exception):
+    pass
+
+def timeout(seconds):
     def decorator(func):
         def wrapper(*args, **kwargs):
-            def handler(signum, frame):
-                raise Exception("Function timed out!")
-
-            signal.signal(signal.SIGALRM, handler)
-            signal.alarm(seconds)
-            result = func(*args, **kwargs)
-            signal.alarm(0)
-            return result
+            res = [TimeoutException('Function timed out!')]
+            def target():
+                try:
+                    res[0] = func(*args, **kwargs)
+                except Exception as e:
+                    res[0] = e
+            t = Thread(target=target)
+            t.start()
+            t.join(seconds)
+            if isinstance(res[0], BaseException):
+                raise res[0]
+            return res[0]
         return wrapper
     return decorator
 
