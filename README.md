@@ -289,6 +289,40 @@ greet_func = injector_instance.inject('greet')
 print(greet_func('World'))  # Outputs: Hello, World!
 ```
 
+### Queue
+
+The `Queue` class provides a simple implementation of a queue data structure. It also logs every action performed on the queue.
+
+```python
+from decoutilities.queue import Queue
+
+# Create a Queue instance
+queue = Queue()
+
+# Add an item to the queue
+queue.add_item('item1')
+
+# Remove an item from the queue
+removed_item = queue.remove_item()
+
+# Check the first item in the queue without removing it
+first_item = queue.check_item()
+
+# Clear the queue
+queue.clear_queue()
+
+# Print the log of actions performed on the queue
+queue.print_log()
+```
+
+#### Methods
+
+- `add_item(item)`: Adds an item to the end of the queue.
+- `remove_item()`: Removes and returns the first item in the queue. If the queue is empty, it returns `None`.
+- `check_item()`: Returns the first item in the queue without removing it. If the queue is empty, it returns `None`.
+- `clear_queue()`: Clears all items from the queue.
+- `print_log()`: Prints the log of actions performed on the queue. Each log entry includes the timestamp, action, item, and the size of the queue after the action.
+
 ## Experimental Features
 
 All features marked as in `BETA` or being `EXPERIMENTAL` are untested, what means they were only tested below specific condititons and not with all case of uses.
