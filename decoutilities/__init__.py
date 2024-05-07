@@ -62,7 +62,6 @@ def loop(condition_func):
 # Mark a function as deprecated and print a log when its used for the first time, also raise a warning and show in the editor as a warning.
 def deprecated(func):
     import warnings
-    import inspect
 
     def wrapper(*args, **kwargs):
         warnings.warn(f"Function {func.__name__} is deprecated and will be removed in the future.", DeprecationWarning, stacklevel=2)
@@ -73,7 +72,6 @@ def deprecated(func):
 # Mark a function as experimental and print a log when its used for the first time, also raise a warning and show in the editor as a warning.
 def experimental(func):
     import warnings
-    import inspect
 
     def wrapper(*args, **kwargs):
         warnings.warn(f"Function {func.__name__} is experimental and may not work as expected.", UserWarning, stacklevel=2)
@@ -104,13 +102,11 @@ def delay(seconds):
 
 # @timeout(seconds)
 # Timeout a function after a number of seconds.
-from threading import Thread
-import time
-
 class TimeoutException(Exception):
     pass
 
 def timeout(seconds):
+    from threading import Thread
     def decorator(func):
         def wrapper(*args, **kwargs):
             res = [TimeoutException('Function timed out!')]
