@@ -323,6 +323,54 @@ queue.print_log()
 - `clear_queue()`: Clears all items from the queue.
 - `print_log()`: Prints the log of actions performed on the queue. Each log entry includes the timestamp, action, item, and the size of the queue after the action.
 
+## Data Encryption Module
+
+This module provides a way to encrypt and decrypt data, either in the form of text strings or files. It uses an XOR encryption system with a randomly generated key.
+
+### Classes
+
+The module consists of two main classes:
+
+1. `keyManager`: This class is responsible for generating a unique encryption key. The key is randomly generated each time a `keyManager` instance is created.
+
+2. `dataEncryptor`: This class uses an instance of `keyManager` to encrypt and decrypt data. The data can be a text string or a file.
+
+### Usage
+
+To use this module, you first need to create an instance of `keyManager`:
+
+```python
+key_manager = keyManager()
+```
+
+Next, you can create an instance of `dataEncryptor` using the `keyManager`:
+
+```python
+encryptor = dataEncryptor(key_manager)
+```
+
+Now you can encrypt and decrypt data. To encrypt data, use the `encrypt` method:
+
+```python
+encrypted_data = encryptor.encrypt(source, 'string')  # To encrypt a text string
+encrypted_file = encryptor.encrypt(source, 'file')  # To encrypt a file
+```
+
+To decrypt data, use the `decrypt` method:
+
+```python
+decrypted_data = encryptor.decrypt(encrypted_data, 'string')  # To decrypt a text string
+decrypted_file = encryptor.decrypt(encrypted_file, 'file')  # To decrypt a file
+```
+
+### Key Generation
+
+The key generation process in `keyManager` is designed to be secure. It uses a large random number as the basis for the key, which makes it difficult for an attacker to guess. The length of the key also contributes to its security. The longer the key, the more possible combinations there are, making it harder for an attacker to crack.
+
+### Notes
+
+This module uses XOR encryption, which is not secure for most practical uses. It is recommended to use a more secure encryption algorithm for any data that needs protection in the real world.
+
 ## Experimental Features
 
 All features marked as in `BETA` or being `EXPERIMENTAL` are untested, what means they were only tested below specific condititons and not with all case of uses.
