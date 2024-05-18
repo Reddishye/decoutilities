@@ -6,7 +6,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
 name='decoutilities',
-version='0.2.3',
+version='0.2.4',
 author='Hugo Torres',
 author_email='contact@redactado.es',
 description='Enhance the readability of your code with decorators and simplify the creation of configuration files.',
