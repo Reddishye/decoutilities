@@ -270,6 +270,7 @@ api_key = config_container.getValue("api_key")
 ### Inject System
 
 `decoutilities` comes with an easy to use injector class (EXPERIMENTAL) that allows to easily share information.
+Note: The recently added `registerClass` method allows to register classes instead of single functions, recommended combination with `singleton` decorator.
 
 ```python
 from decoutilities.inject import injector
