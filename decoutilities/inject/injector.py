@@ -15,5 +15,8 @@ class injector:
             return func
         return decorator
 
+    def registerClass(self, key, instance):
+        self.registry[key] = instance
+
     def inject(self, key):
         return self.registry.get(key)
