@@ -17,7 +17,7 @@ class Logger:
         if self.prefix is not None:
             event = self.prefix + " " + event
         message = self.text_utils.format(message)
-        formatted_message = self.format.format(event=event, message=message)
+        formatted_message = f"{event} {message}"
         print(formatted_message)
         self.__toLogFile(formatted_message)
     
