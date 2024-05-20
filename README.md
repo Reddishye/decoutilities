@@ -372,6 +372,92 @@ The key generation process in `keyManager` is designed to be secure. It uses a l
 
 This module uses XOR encryption, which is not secure for most practical uses. It is recommended to use a more secure encryption algorithm for any data that needs protection in the real world.
 
+## Text Utilities
+
+The `textUtils` class provides methods for formatting and decorating text in the console. It includes methods for coloring text, adding decorations such as bold, underline, and italic, and a general format method that replaces aliases with their corresponding ANSI escape codes.
+
+### Usage
+
+To use this class, you first need to create an instance of `textUtils`:
+
+```python
+text_utils = textUtils()
+```
+
+You can then use the `color`, `decorate`, and `format` methods to format your text:
+
+```python
+# Color text
+colored_text = text_utils.color('red', 'Hello, World!')
+
+# Decorate text
+bold_text = text_utils.decorate('bold', 'Hello, World!')
+
+# Format text
+formatted_text = text_utils.format('bold red Hello, World!')
+```
+
+### Methods
+
+- `color(color, text)`: Colors the text with the specified color. The available colors are: red, green, yellow, blue, purple, cyan, white, dark_red, dark_green, gold, gray, dark_gray, black, and reset.
+
+- `decorate(decoration, text)`: Decorates the text with the specified decoration. The available decorations are: bold, underline, and italic.
+
+- `format(text)`: Replaces aliases in the text with their corresponding ANSI escape codes. The available aliases are the same as the colors and decorations listed above.
+
+### Notes
+
+The `format` method applies the ANSI escape codes in the order they appear in the text. If the same alias appears multiple times in the text, all instances will be replaced. The `reset` alias resets all formatting, so it can be used to stop the effect of a previous alias.
+
+## Logger
+
+The `Logger` class provides methods for logging events and messages with different levels of severity. It includes methods for logging info, warning, error, success, debug, and announcement messages. The messages can be formatted using the `textUtils` class and can optionally be written to a log file.
+
+### Usage
+
+To use this class, you first need to create an instance of `Logger`:
+
+```python
+logger = Logger(prefix='MyApp', debug=True, log='app.log')
+```
+
+You can then use the `info`, `warning`, `error`, `success`, `debug`, and `announce` methods to log messages:
+
+```python
+# Log an info message
+logger.info('This is an info message.')
+
+# Log a warning message
+logger.warning('This is a warning message.')
+
+# Log an error message
+logger.error('This is an error message.')
+
+# Log a success message
+logger.success('This is a success message.')
+
+# Log a debug message
+logger.debug('This is a debug message.')
+
+# Log an announcement
+logger.announce('This is an announcement.')
+```
+
+### Methods
+
+- `info(message)`: Logs an info message.
+- `warning(message)`: Logs a warning message.
+- `error(message)`: Logs an error message.
+- `success(message)`: Logs a success message.
+- `debug(message)`: Logs a debug message if the `debug` attribute of the `Logger` instance is `True`.
+- `announce(message)`: Logs an announcement.
+
+### Notes
+
+The `Logger` class uses the `textUtils` class to format the messages. The format of the messages can be specified when creating a `Logger` instance with the `format` parameter. The `{event}` placeholder in the format string is replaced with the event type (e.g., "INFO", "WARNING"), and the `{message}` placeholder is replaced with the actual message.
+
+If a `log` parameter is provided when creating a `Logger` instance, the logged messages will also be written to the specified log file.
+
 ## Experimental Features
 
 All features marked as in `BETA` or being `EXPERIMENTAL` are untested, what means they were only tested below specific condititons and not with all case of uses.
