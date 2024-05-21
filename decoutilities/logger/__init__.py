@@ -6,7 +6,6 @@ class Logger:
         self.log = log
         self.format = format
         self.debug = debug
-        self.text_utils = textUtils()
 
     def  __toLogFile(self, message):
         if self.log is not None:
@@ -15,8 +14,8 @@ class Logger:
 
     def __log(self, event, message):
         if self.prefix is not None:
-            event = self.prefix + " " + event
-        message = self.text_utils.format(message)
+            event = textUtils().format(self.prefix + " " + event)
+        message = textUtils().format(message)
         formatted_message = f"{event} {message}"
         print(formatted_message)
         self.__toLogFile(formatted_message)
