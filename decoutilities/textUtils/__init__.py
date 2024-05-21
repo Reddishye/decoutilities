@@ -46,26 +46,39 @@ class textUtils:
         
     def format(text):
         aliases = {
-            "bold": "\033[1m",
-            "underline": "\033[4m",
-            "italic": "\033[3m",
-            "red": "\033[91m",
-            "green": "\033[92m",
-            "yellow": "\033[93m",
-            "blue": "\033[94m",
-            "purple": "\033[95m",
-            "cyan": "\033[96m",
-            "white": "\033[97m",
-            "dark_red": "\033[31m",
-            "dark_green": "\033[32m",
-            "gold": "\033[33m",
-            "gray": "\033[37m",
-            "dark_gray": "\033[90m",
-            "black": "\033[30m",
-            "reset": "\033[0m"
+            "{bold}": "\033[1m",
+            "{underline}": "\033[4m",
+            "{italic}": "\033[3m",
+            "{red}": "\033[91m",
+            "{green}": "\033[92m",
+            "{yellow}": "\033[93m",
+            "{blue}": "\033[94m",
+            "{purple}": "\033[95m",
+            "{cyan}": "\033[96m",
+            "{white}": "\033[97m",
+            "{dark_red}": "\033[31m",
+            "{dark_green}": "\033[32m",
+            "{gold}": "\033[33m",
+            "{gray}": "\033[37m",
+            "{dark_gray}": "\033[90m",
+            "{black}": "\033[30m",
+            "{reset}": "\033[0m"
         }
 
         for key, value in aliases.items():
             text = text.replace(key, value)
 
         return text + "\033[0m"  # reset at the end
+def format(text):
+    return textUtils.format(text)
+def color(color, text):
+    return textUtils.color(color, text)
+def decorate(decoration, text):
+    return textUtils.decorate(decoration, text)
+
+# FORMAT DECORATOR
+def formated(func):
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        return format(result)
+    return wrapper
