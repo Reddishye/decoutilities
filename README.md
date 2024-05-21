@@ -1,6 +1,6 @@
 # decoutilities
 
-A simple python package that allows using decorators for multiple things like easily setting up singleton or config files.
+A simple python package that allows using decorators for multiple things like easily setting up a singleton or a configuration file for your app.
 
 ## Installation
 
@@ -378,23 +378,24 @@ The `textUtils` class provides methods for formatting and decorating text in the
 
 ### Usage
 
-To use this class, you first need to create an instance of `textUtils`:
+To use this class, you must not initialize it, otherwise it will throw an error.
 
 ```python
-text_utils = textUtils()
-```
+from decoutilities.textUtils import color, formated, decorate
+from decoutilities.textUtils import format as textFormat # Recommended importing with other name to prevent conflicts with python's default format funcion
 
-You can then use the `color`, `decorate`, and `format` methods to format your text:
+print(color("red", "This is a red-colored text!"))
+print(decorate("bold", "This is a bold text!"))
 
-```python
-# Color text
-colored_text = text_utils.color('red', 'Hello, World!')
+# You can make also a function always output a formated string
+@formated
+def pig()
+    return "{purple}Oink Oink!"
 
-# Decorate text
-bold_text = text_utils.decorate('bold', 'Hello, World!')
+print(pig())
 
-# Format text
-formatted_text = text_utils.format('bold red Hello, World!')
+# Or use the format function!
+print(textFormat("Hello my {red}red{reset}friends! Ready for a {bold}new {reset}adventure?"))
 ```
 
 ### Methods
@@ -404,6 +405,8 @@ formatted_text = text_utils.format('bold red Hello, World!')
 - `decorate(decoration, text)`: Decorates the text with the specified decoration. The available decorations are: bold, underline, and italic.
 
 - `format(text)`: Replaces aliases in the text with their corresponding ANSI escape codes. The available aliases are the same as the colors and decorations listed above.
+
+- `@formated`: Decorator used to make a function's output return always a colorful string.
 
 ### Notes
 
@@ -418,6 +421,8 @@ The `Logger` class provides methods for logging events and messages with differe
 To use this class, you first need to create an instance of `Logger`:
 
 ```python
+from decoutilities.logger import Logger
+
 logger = Logger(prefix='MyApp', debug=True, log='app.log')
 ```
 
@@ -457,6 +462,44 @@ logger.announce('This is an announcement.')
 The `Logger` class uses the `textUtils` class to format the messages. The format of the messages can be specified when creating a `Logger` instance with the `format` parameter. The `{event}` placeholder in the format string is replaced with the event type (e.g., "INFO", "WARNING"), and the `{message}` placeholder is replaced with the actual message.
 
 If a `log` parameter is provided when creating a `Logger` instance, the logged messages will also be written to the specified log file.
+
+## Components
+
+´decoutilities´ includes a basic component feature that replaces Python default inputs in certain situations. Altrough this feature was not tested on Linux and MacOS, I suppose it should work.
+
+### Selector
+
+The `Selector` component allows to make selections of only ONE item, here is a piece of code.
+
+```python
+from decoutilities.components import Selector
+from decoutilities.textUtils import format as color # The method to import directly was added on 0.2.9
+
+database = Selector("Please choose a database:", ["{green}MongoDB", "{blue}MariaDB", "{gold}MySQL"])
+
+result = database.display()
+
+print(color("{bold}You selected: "+result))
+```
+
+### Checkmarks
+
+Also, as the `Selector` feature, this one works the same way.
+
+```python
+from decoutilities.components import Checkmark
+
+features = Checkmark("Which features would you like to install?", ["Dark Mode", "SSR Support"]) # TIP: Add ["| 🟩", "| ⬛"] as the third argument to customize the prefixes of the selected (0) and unselected (1) options.
+
+selected = features.display()
+
+print(selected)
+
+```
+
+### Input
+
+This feature is still under development.
 
 ## Experimental Features
 

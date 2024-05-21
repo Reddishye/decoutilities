@@ -2,10 +2,12 @@ import msvcrt
 import os
 from ..textUtils import textUtils
 
-class Selector:
-    def __init__(self, text="Please select an option:", options=["Option 1", "Option 2", "Option 3"], prefixes=["| 🔵", "| ⚫"]):
+
+class Checkmark:
+    def __init__(self, text="Please select options:", options=["Option 1", "Option 2", "Option 3"], prefixes=["| 🟩", "| ⬛"]):
         self.options = options
         self.text = textUtils.format("{bold}" + text)
+        self.selected_options = [False] * len(options)
         self.prefixes = prefixes
 
     def display(self):
@@ -14,7 +16,7 @@ class Selector:
             os.system('cls' if os.name == 'nt' else 'clear')  # Clear the console
             print(self.text)
             for i, option in enumerate(self.options):
-                prefix = self.prefixes[1] if i == option_index else self.prefixes[0]
+                prefix = self.prefixes[0] if self.selected_options[i] else self.prefixes[1]
                 prefix_color = "{green}" if i == option_index else "{gray}"
                 option_color = "{white}" if i == option_index else "{gray}"
                 print(textUtils.format(prefix_color + prefix) + " " + textUtils.format(option_color + option))
@@ -24,5 +26,7 @@ class Selector:
                     option_index = (option_index - 1) % len(self.options)
                 elif key == b'P':  # Down arrow
                     option_index = (option_index + 1) % len(self.options)
+            elif key == b' ':  # Space key
+                self.selected_options[option_index] = not self.selected_options[option_index]
             elif key == b'\r':  # Enter key
-                return self.options[option_index]
+                return [option for i, option in enumerate(self.options) if self.selected_options[i]]
