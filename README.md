@@ -497,9 +497,73 @@ print(selected)
 
 ```
 
+
 ### Input
 
-This feature is still under development.
+The `Input` class is a utility for creating interactive console inputs with validation rules. 
+
+#### Importing the Class
+
+```python
+from decoutilities.components import Input
+```
+
+#### Creating an Instance
+
+```python
+name = Input('Password', '', 'REQUIRED|PASSWORD', 'The text is hidden')
+```
+
+#### Displaying the Input
+
+```python
+name.display()
+```
+
+#### Validation Rules
+
+The `Input` class supports a variety of validation rules. These rules are passed as a string when creating an instance of the class. Multiple rules can be combined using the pipe character (`|`).
+
+Here are the available rules and their usage:
+
+- `REQUIRED`: The input must not be empty.
+- `PASSWORD`: The input will be hidden.
+- `EMAIL`: The input must be a valid email address.
+- `NUMBER`: The input must be a number.
+- `STRING`: The input must be a string.
+- `MIN:<number>`: The input must be at least `<number>` characters long.
+- `MAX:<number>`: The input must be at most `<number>` characters long.
+- `LENGTH:<number>`: The input must be exactly `<number>` characters long.
+- `REGEX:<pattern>`: The input must match the regex `<pattern>`.
+- `CONTAINS:<value>`: The input must contain `<value>`.
+- `NOT_CONTAINS:<value>`: The input must not contain `<value>`.
+- `IN:<value1,value2,...>`: The input must be one of the specified values.
+- `NOT_IN:<value1,value2,...>`: The input must not be one of the specified values.
+- `EQUALS:<value>`: The input must be equal to `<value>`.
+- `NOT_EQUALS:<value>`: The input must not be equal to `<value>`.
+- `HIGHER:<number>`: The input must be higher than `<number>`.
+- `LOWER:<number>`: The input must be lower than `<number>`.
+- `HIGHER_OR_EQUAL:<number>`: The input must be higher or equal to `<number>`.
+- `LOWER_OR_EQUAL:<number>`: The input must be lower or equal to `<number>`.
+- `FLOAT`: The input must be a float.
+- `BOOLEAN`: The input must be a boolean (`true` or `false`).
+- `JSON`: The input must be a valid JSON string.
+- `IP`: The input must be a valid IP address.
+- `URL`: The input must be a valid URL.
+- `DATE`: The input must be a valid date (`YYYY-MM-DD`).
+- `TIME`: The input must be a valid time (`HH:MM:SS`).
+- `DATETIME`: The input must be a valid datetime (`YYYY-MM-DD HH:MM:SS`).
+- `PHONE`: The input must be a valid phone number (10 digits).
+- `PASSWORD`: The input must be a valid password (Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character).
+
+#### Example
+
+```python
+email = Input('Email', '', 'REQUIRED|EMAIL', 'Enter your email')
+email.display()
+```
+
+This will create an input that requires a valid email address.
 
 ## Experimental Features
 
