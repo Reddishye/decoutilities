@@ -43,6 +43,9 @@ class textUtils:
                 return "\033[3m" + text + "\033[0m"
             case _:
                 return text
+
+    def hexColor(hexColor, text):
+        return "\033[38;2;0x" + hexColor + "m" + text + "\033[0m"
         
     def format(text):
         import re
