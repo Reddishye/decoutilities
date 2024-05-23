@@ -38,3 +38,12 @@ class Logger:
 
     def announce(self, message):
         self.__log("ANNOUNCE", message)
+
+    # @newEvent(name)
+    # Create a new event.
+    def newEvent(self, name):
+        def decorator(func):
+            def wrapper(*args, **kwargs):
+                self.__log(name, func(*args, **kwargs))
+            return wrapper
+        return decorator

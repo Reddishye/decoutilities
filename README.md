@@ -565,6 +565,29 @@ email.display()
 
 This will create an input that requires a valid email address.
 
+## Screen Utils
+
+### Screen
+
+Screen is a way to easily know the terminal's size. Altough for the moment it only has this feature, will have more as the development continues. As right now this feature is not long enough to have its own section on the README.md I will not explain it in detail, however you are free to check the source code if wondering to use it.
+
+Planned:
+- Screen division
+- Tab manager
+- Freeze screens
+
+### Titler
+
+This one, relays on the `Screen` feature, and allows to make simple titles.
+
+```python
+from decoutilities.screenUtils import Titler
+
+welcome = Titler('Welcome to my program!', '[ Press anything to continue ]')  # last argument is optional
+
+welcome.show()
+```
+
 ## Experimental Features
 
 All features marked as in `BETA` or being `EXPERIMENTAL` are untested, what means they were only tested below specific condititons and not with all case of uses.

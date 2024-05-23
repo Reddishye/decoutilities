@@ -43,8 +43,12 @@ class textUtils:
                 return "\033[3m" + text + "\033[0m"
             case _:
                 return text
+
+    def hexColor(hexColor, text):
+        return "\033[38;2;0x" + hexColor + "m" + text + "\033[0m"
         
     def format(text):
+        import re
         aliases = {
             "{bold}": "\033[1m",
             "{underline}": "\033[4m",
@@ -67,6 +71,9 @@ class textUtils:
 
         for key, value in aliases.items():
             text = text.replace(key, value)
+
+        # Hex {#RRGGBB}
+        text = re.sub(r'{#([0-9A-Fa-f]{6})}', r'\033[38;2;0x\1m', text)
 
         return text + "\033[0m"  # reset at the end
 def format(text):
