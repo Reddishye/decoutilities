@@ -465,7 +465,7 @@ If a `log` parameter is provided when creating a `Logger` instance, the logged m
 
 ## Components
 
-´decoutilities´ includes a basic component feature that replaces Python default inputs in certain situations. Altrough this feature was not tested on Linux and MacOS, I suppose it should work.
+`decoutilities` includes a basic component feature that replaces Python default inputs in certain situations. Altrough this feature was not tested on Linux and MacOS, I suppose it should work.
 
 ### Selector
 
