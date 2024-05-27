@@ -148,3 +148,78 @@ def log(func):
         print(f"Function {func.__name__} called with args: {args} and kwargs: {kwargs}, returned: {result}")
         return result
     return wrapper
+
+# @benchmark
+# Benchmark a function and print the time it took to execute.
+def benchmark(func):
+    import time
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        end = time.time()
+        print(f"Function {func.__name__} took {end - start} seconds to execute.")
+        return result
+    return wrapper
+
+# @ignore
+# Ignore a function and do nothing.
+def ignore(func):
+    def wrapper(*args, **kwargs):
+        pass
+    return wrapper
+
+# @abstract
+# Make a function abstract and raise an exception if it is not implemented in a subclass.
+def abstract(func):
+    def wrapper(*args, **kwargs):
+        raise Exception(f"Function {func.__name__} is abstract and must be implemented in a subclass!")
+    return wrapper
+
+# @accepts(*types)
+# Check if a function's arguments are of the specified types.
+def accepts(*types):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            for i, arg in enumerate(args):
+                if not isinstance(arg, types[i]):
+                    raise TypeError(f"Argument {i} must be of type {types[i].__name__}")
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
+
+# @returns(type)
+# Check if a function's return value is of the specified type.
+def returns(type):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            if not isinstance(result, type):
+                raise TypeError(f"Return value must be of type {type.__name__}")
+            return result
+        return wrapper
+    return decorator
+
+# @webhook(url)
+# Send a webhook to a URL with the function's arguments and return value.
+def webhook(url):
+    import requests
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            data = {
+                "args": args,
+                "kwargs": kwargs,
+                "result": func(*args, **kwargs)
+            }
+            requests.post(url, json=data)
+        return wrapper
+    return decorator
+
+# @yieldable
+# Make a function yieldable and return a generator.
+
+def yieldable(func):
+    def wrapper(*args, **kwargs):
+        def generator():
+            yield func(*args, **kwargs)
+        return generator()
+    return wrapper

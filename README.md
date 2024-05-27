@@ -214,9 +214,94 @@ from decoutilities import log
 @log
 def function_to_log(a, b):
     return a + b
-
 function_to_log(1, 2)  # Prints "Function function_to_log called with args: (1, 2) and kwargs: {}, returned: 3"
 ```
+
+### @benchmark
+
+The `@benchmark` decorator is used to measure the execution time of a function. It prints the time it took for the function to execute in seconds.
+
+```python
+from decoutilities import benchmark
+
+@benchmark
+def my_function():
+    pass
+```
+
+### @ignore
+
+The `@ignore` decorator is used to ignore a function. When a function is decorated with `@ignore`, it does nothing.
+
+```python
+from decoutilities import ignore
+
+@ignore
+def my_function():
+    pass
+```
+
+### @abstract
+
+The `@abstract` decorator is used to make a function abstract. If a function decorated with `@abstract` is called, it raises an exception indicating that the function must be implemented in a subclass.
+
+```python
+from decoutilities import abstract
+
+@abstract
+def my_function():
+    pass
+```
+
+### @accepts(*types)
+
+The `@accepts` decorator is used to check if the arguments of a function are of the specified types. If an argument is not of the specified type, it raises a `TypeError`.
+
+```python
+from decoutilities import accepts
+
+@accepts(int, str)
+def my_function(arg1, arg2):
+    pass
+```
+
+### @returns(type)
+
+The `@returns` decorator is used to check if the return value of a function is of the specified type. If the return value is not of the specified type, it raises a `TypeError`.
+
+```python
+from decoutilities import returns
+
+@returns(int)
+def my_function():
+    return "not an integer"  # Raises a TypeError
+```
+
+### @webhook(url)
+
+The `@webhook` decorator is used to send a webhook to a specified URL with the function's arguments and return value. It uses the `requests.post` method to send the data.
+
+```python
+from decoutilities import webhook
+
+@webhook("http://my-webhook-url.com")
+def my_function(arg1, arg2):
+    return arg1 + arg2
+```
+
+### @yieldable
+
+The `@yieldable` decorator is used to make a function yieldable. It returns a generator that yields the result of the function.
+
+```python
+from decoutilities import yieldable
+
+@yieldable
+def my_function():
+    return "yielded value"
+```
+
+
 
 ### Config System
 
