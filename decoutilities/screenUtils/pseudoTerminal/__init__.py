@@ -1,6 +1,9 @@
 import msvcrt
 import threading
 from decoutilities.textUtils import format as color
+from utils.legacyLoadingStrategy import legacyLoadingStrategy
+from utils.modernLoadingStrategy import modernLoadingStrategy
+from command import Command
 
 class pseudoTerminal():
     def __init__(self, prefix='{path} > ', disabledCommands=[], startFolder='~'):
@@ -27,6 +30,15 @@ class pseudoTerminal():
             self.commands[command] = func
         else:
             self.commands[command] = self.__commandDisabled
+
+    def addModernCommand(self, command):
+        if command.name not in self.disabledCommands and isinstance(command, Command):
+            self.commands[command.name] = command
+
+            for alias in command.aliases:
+                self.commands[alias] = command
+        else:
+            self.commands[command.name] = self.__commandDisabled
 
     def display(self):
         def run():
@@ -70,7 +82,6 @@ class pseudoTerminal():
     def __history(self, args):
         for command in self.history:
             print(command)
-
     def __get_input(self):
         command = ''
         print(color('{blue}' + self.prefix.replace('{path}', self.path)), end='', flush=True)
@@ -96,7 +107,11 @@ class pseudoTerminal():
             if matches:
                 first_word = command.split(' ')[0]
                 if first_word in self.commands:
-                    print('\r' + color('{blue}' + prefix) + color('{green}' + first_word) + color('{white}' + command[len(first_word):]) + color('{dark_gray}' + matches[0][len(command):]), end='', flush=True)
+                    if isinstance(self.commands[first_word], Command):
+                        autocomplete_text = self.commands[first_word].onAutoComplete()
+                        print('\r' + color('{blue}' + prefix) + color('{green}' + first_word) + color('{white}' + command[len(first_word):]) + color('{dark_gray}' + autocomplete_text), end='', flush=True)
+                    else:
+                        print('\r' + color('{blue}' + prefix) + color('{green}' + first_word) + color('{white}' + command[len(first_word):]) + color('{dark_gray}' + matches[0][len(command):]), end='', flush=True)
                 else:
                     print('\r' + color('{blue}' + prefix) + color('{red}' + first_word) + color('{white}' + command[len(first_word):]) + color('{dark_gray}' + matches[0][len(command):]), end='', flush=True)
                 if (command not in self.commands):
@@ -125,7 +140,7 @@ class pseudoTerminal():
                 os.chdir(new_path)
                 self.path = os.getcwd()  # Get the current working directory after changing it
                 self.path = self.path.replace(self.__detectHomeFolder(), '~')
-                print(color('{green}Directory changed to: ' + self.path))  # Print the updated path
+                print(color('{green}Directory changed to: ' + self.path + '. Enjoy your stay!'))  # Print the updated path with a custom message
             except FileNotFoundError:
                 print(color('{red}Error: Directory not found'))
             except PermissionError:
@@ -134,7 +149,7 @@ class pseudoTerminal():
                 print(color('{red}Unexpected error: ' + str(e)))
         else:
             self.path = self.__detectHomeFolder()
-            print(color('{green}Directory changed to home.'))
+            print(color('{green}Directory changed to home. Welcome back!'))  # Print a custom message when changing to the home directory
                         
     def __dir(self, args):
         import os
