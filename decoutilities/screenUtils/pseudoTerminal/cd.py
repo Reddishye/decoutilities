@@ -8,7 +8,7 @@ class Cd(Command):
         self.aliases = []
 
     def onAutoComplete(self, partialCommand):
-        pass
+        return 'test'   
 
     def onExecute(self, args):
         import os
@@ -28,4 +28,5 @@ class Cd(Command):
         else:
             self.path = self.__detectHomeFolder()
             print(color('{green}Directory changed to home. Welcome back!'))  # Print a custom message when changing to the home directory
-                      
+                    
+                
