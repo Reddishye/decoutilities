@@ -67,3 +67,4 @@ class MiniMessage():
                 message += temp + segment
                 # Add the reset tag to the end of the message
                 message += self.aliases["reset"]
+        return message
