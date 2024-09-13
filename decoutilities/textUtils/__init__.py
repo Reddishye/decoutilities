@@ -1,3 +1,5 @@
+from . import minimessage  # noqa: F401
+
 class textUtils:
     def color(color, text):
         pattern = "" # {0} is the text
