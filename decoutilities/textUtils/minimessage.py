@@ -48,14 +48,22 @@ class MiniMessage():
                         # If it is an opening tag, add it to the current_tags list
                         current_tags.append(tag)
                     else:
-                        # If the tag is not in the aliases, add it to the message
-                        message += segment
+                        # Check for HEX color
+                        if re.match(r"#[0-9a-fA-F]{6}", tag):
+                            current_tags.append(tag)
+                        else:
+                            # If the tag is not in the aliases, add it to the message
+                            message += segment
             else:
                 # If the segment is not a tag, add it to the message with the current tags value
                 temp = ""
                 # Loop through the current tags and add the aliases to the message
                 for tag in current_tags:
-                    temp += self.aliases[tag]
+                    # check if tag is a HEX color
+                    if re.match(r"#[0-9a-fA-F]{6}", tag):
+                        temp += "\033[38;2;" + tag[1:] + "m"
+                    else:
+                        temp += self.aliases[tag]
                 message += temp + segment
                 # Add the reset tag to the end of the message
                 message += self.aliases["reset"]
