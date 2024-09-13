@@ -497,6 +497,20 @@ print(textFormat("Hello my {red}red{reset}friends! Ready for a {bold}new {reset}
 
 The `format` method applies the ANSI escape codes in the order they appear in the text. If the same alias appears multiple times in the text, all instances will be replaced. The `reset` alias resets all formatting, so it can be used to stop the effect of a previous alias.
 
+## MiniMessage Text Colorin
+
+This feature allows coloring text in a similar way you would format messgaes with MiniMessage from Kyori (Minecraft), this feels an easier way to some users, as consists on tags, meaning you can do something like this:
+
+```python
+from decoutilities.textUtils.minimessage  import MiniMessage
+
+# Create an instance of the MiniMessage Class
+mm = MiniMessage()
+
+# Now use it with the parse method to parse a text, this is the only public method this class contains.
+print(mm.parse('<white>I <red>love</red> decoutilities! This function was added on <b>0.3.4</b></white>'))
+```
+
 ## Logger
 
 The `Logger` class provides methods for logging events and messages with different levels of severity. It includes methods for logging info, warning, error, success, debug, and announcement messages. The messages can be formatted using the `textUtils` class and can optionally be written to a log file.
