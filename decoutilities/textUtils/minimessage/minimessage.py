@@ -33,7 +33,6 @@ class MiniMessage():
         # Loop through the segments and determine the opened tags for each one, finally fill data_segments with the data, i.e ["red,bold", "This is a test", "green", "of the", "bold", "MiniMessage", "green", "class", "red"]
         current_tags = []
         message = ""
-        current_segment = ""
         for segment in segments:
             # Use RE to clasify if the segment is a tag or not
             if re.match(r"<[^>]+>", segment):
