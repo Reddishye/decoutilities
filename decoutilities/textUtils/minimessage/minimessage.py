@@ -1,5 +1,7 @@
 import re
 
+# Same as classic textutils formatting, however, this is more precise as on every style cange fully resets the styles and writes the new ones
+# Inspired by the MiniMessage package from Kyori (This one does not include component system)
 class MiniMessage():
     def __init__(self, debug=False):
         self.debug = debug
