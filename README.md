@@ -687,10 +687,10 @@ This will create an input that requires a valid email address.
 
 Screen is a way to easily know the terminal's size. Altough for the moment it only has this feature, will have more as the development continues. As right now this feature is not long enough to have its own section on the README.md I will not explain it in detail, however you are free to check the source code if wondering to use it.
 
-Planned:
-- Screen division
-- Tab manager
-- Freeze screens
+`0.3.6` > This section is fully untested, code was not finished and some feautres here were discarded because of their complexity.
+
+Problems found:
+- This feature is extemely hard to tesst, as it requires a multithreaded or multiprocess environment.
 
 ### Titler
 
@@ -717,6 +717,11 @@ This whole project is still in beta, and versions below `0.1.5` might not work. 
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+### Quick explanation of MIT license
+MIT license is OSI approved, meaning you can do anythihng you wish with this project. Reuploading forks, selling copies (may be legally a scam as this free), modifying on own convenience...
+
+This means you also may copy code from this project if you wish to.
 
 ## Contributing
 
