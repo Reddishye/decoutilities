@@ -497,12 +497,12 @@ print(textFormat("Hello my {red}red{reset}friends! Ready for a {bold}new {reset}
 
 The `format` method applies the ANSI escape codes in the order they appear in the text. If the same alias appears multiple times in the text, all instances will be replaced. The `reset` alias resets all formatting, so it can be used to stop the effect of a previous alias.
 
-## MiniMessage Text Colorin
+## MiniMessage Text Coloring
 
 This feature allows coloring text in a similar way you would format messgaes with MiniMessage from Kyori (Minecraft), this feels an easier way to some users, as consists on tags, meaning you can do something like this:
 
 ```python
-from decoutilities.textUtils.minimessage  import MiniMessage
+from decoutilities.textUtils.minimessage.minimessage  import MiniMessage
 
 # Create an instance of the MiniMessage Class
 mm = MiniMessage()
@@ -510,6 +510,23 @@ mm = MiniMessage()
 # Now use it with the parse method to parse a text, this is the only public method this class contains.
 print(mm.parse('<white>I <red>love</red> decoutilities! This function was added on <b>0.3.4</b></white>'))
 ```
+
+### Components
+
+Components are a powerful feature to use with the MiniMessage text coloring, it allows to store the text information, dividing it in segments with the respective colors.
+
+To create a component:
+```python
+from decoutilities.textUtils.minimessage.component import Component
+from decoutilities.textUtils.minimessage.minimessage  import MiniMessage
+
+mytext = Component().fromText("<red>This is a test <bold>of the <green>MiniMessage<reset> class<red>")
+parser = MiniMessage()
+
+print(parser.parse(mytext)) # This will print the text with the colors and styles applied
+```
+
+You may also use `.replace` over the Component to replace strings, or print the raw component (a json with all the data and styling information)
 
 ## Logger
 
