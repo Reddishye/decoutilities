@@ -73,3 +73,8 @@ class Component():
                 data.append(data_segment)
         self.data = data
         return self
+    
+    def replace(self, arg1, arg2):
+        for segment in self.data:
+            segment["text"] = segment["text"].replace(arg1, arg2)
+        return self
