@@ -29,7 +29,7 @@ class MiniMessage():
             "reset": "\033[00m"
         }
 
-    def parse(self, text):
+    def __parseFromText(self, text):
         # A segment starts when a tag is opened or closeed, meaning a tag can be opened and closed in the same segment or be cloased with the opening/closing of another tag, i.e [["</last_tag>", "message"],  [...]]
         segments = re.split(r"(<[^>]+>)", text)
         # Loop through the segments and determine the opened tags for each one, finally fill data_segments with the data, i.e ["red,bold", "This is a test", "green", "of the", "bold", "MiniMessage", "green", "class", "red"]
@@ -69,3 +69,24 @@ class MiniMessage():
                 # Add the reset tag to the end of the message
                 message += self.aliases["reset"]
         return message
+    
+    def __parseFromComponent(self, component):
+        message = ""
+        for data in component.data:
+            temp = ""
+            for tag in data["tags"]:
+                # check if tag is a HEX color
+                if re.match(r"#[0-9a-fA-F]{6}", tag):
+                    temp += "\033[38;2;" + tag[1:] + "m"
+                else:
+                    temp += self.aliases[tag]
+            message += temp + data["text"]
+            # Add the reset tag to the end of the message
+            message += self.aliases["reset"]
+        return message
+    
+    def parse(self, arg):
+        if isinstance(arg, str):
+            return self.__parseFromText(arg)
+        else:
+            return self.__parseFromComponent(arg)
