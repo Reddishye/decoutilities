@@ -1,4 +1,5 @@
 # decoutilities
+[![Downloads](https://static.pepy.tech/badge/decoutilities)](https://pepy.tech/project/decoutilities)
 
 A simple python package that allows using decorators for multiple things like easily setting up a singleton or a configuration file for your app.
 
