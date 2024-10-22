@@ -1,6 +1,6 @@
 import msvcrt
 import os
-from ..textUtils import textUtils
+from decoutilities.textUtils import textUtils
 import re
 import json
 
@@ -56,8 +56,29 @@ class Input():
             elif key == b'\x08':  # Backspace key
                 self.__action('delete')
             else:
-                self.__action('write', key.decode("utf-8"))
-    
+                # Check if it's utf-8
+                try:
+                    char = key.decode('utf-8')
+                    self.__action('write', char)
+                except UnicodeDecodeError:
+                    # Try to decode it as utf-16, if it fails, try with latin-1, if it fails, try with utf-32, if it fails, try with ascii
+                    try:
+                        char = key.decode('utf-16')
+                        self.__action('write', char)
+                    except UnicodeDecodeError:
+                        try:
+                            char = key.decode('latin-1')
+                            self.__action('write', char)
+                        except UnicodeDecodeError:
+                            try:
+                                char = key.decode('utf-32')
+                                self.__action('write', char)
+                            except UnicodeDecodeError:
+                                try:
+                                    char = key.decode('ascii')
+                                    self.__action('write', char)
+                                except UnicodeDecodeError:
+                                    pass
     def __validate(self, value):
         rulelist = self.rules.split('|')
         for rule in rulelist:
@@ -149,7 +170,46 @@ class Input():
             if rule == 'PASSWORD':
                 if not re.match(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$', value):
                     return [False, 'Must be a valid password: Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character']
+            if rule.startswith('REGEX:'):
+                if not re.match(rule.split(':')[1], value):
+                    return [False, 'Must match the regex pattern']     
+            if rule.startswith('MODERN_REGEX:'):
+                error = self.modernRegexErrorGen(rule.split(':')[1])
+                if not re.match(rule.split(':')[1], value):
+                    return [False, error]
+            if rule.startswith('CUSTOM_REGEX:'): # CUSTOM_REGEX:regex_pattern:Error message
+                if not re.match(rule.split(':')[1], value):
+                    return [False, rule.split(':')[2]]
         return [True, '']
-    
-name = Input('Password', '', 'REQUIRED|PASSWORD', 'The text is hidden')
-name.display()
+
+    def modernRegexErrorGen(self, regex):
+        initial = 'Must be '
+        error_parts = []
+        
+        if re.search(r'[a-z]', regex):
+            error_parts.append('lowercase letters')
+        if re.search(r'[A-Z]', regex):
+            error_parts.append('uppercase letters')
+        if re.search(r'[0-9]', regex):
+            error_parts.append('numbers')
+        if re.search(r'[@_!#$%^&*()<>?/\|}{~:]', regex):
+            error_parts.append('special characters')
+        
+        length_error = ''
+        if re.search(r'{\d+,\d+}', regex):
+            min_len, max_len = re.findall(r'{(\d+),(\d+)}', regex)[0]
+            length_error = f'between {min_len} and {max_len} characters long'
+        elif re.search(r'{\d+}', regex):
+            length = re.findall(r'{(\d+)}', regex)[0]
+            length_error = f'exactly {length} characters long'
+        elif re.search(r'{\d+,}', regex):
+            min_len = re.findall(r'{(\d+),}', regex)[0]
+            length_error = f'at least {min_len} characters long'
+
+        if length_error:
+            error_parts.append(f'and be {length_error}')
+        
+        return initial+(', '.join(error_parts))
+# test with classic regex
+input = Input('Password', '', 'MODERN_REGEX:^[a-zA-Z0-9]{8,}$', 'Enter your password')
+input.display()
